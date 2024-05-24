@@ -48,14 +48,52 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
+
+
+
+TENANT_TYPES = {
+    "public": {  # this is the name of the public schema from get_public_schema_name
+        "APPS": ['django_tenants',
+                 'client',
+                 'django.contrib.sessions',
+                 "django.contrib.humanize",
+                 'django.contrib.messages',
+                 'django.contrib.staticfiles',
+                 'company_shared',
+                 # shared apps here
+                 ],
+        "URLCONF": "goldhris.urls_public",  # url for the public type here
+
+    }
+
+
+ 
+}
+
+
+INSTALLED_APPS = []
+for schema in TENANT_TYPES:
+    INSTALLED_APPS += [app for app in TENANT_TYPES[schema]
+                       ["APPS"] if app not in INSTALLED_APPS]
+    
+    
+    
+    
+    
+    
+TENANT_MODEL = "client.Client"  # app.Model
+TENANT_DOMAIN_MODEL = "client.Domain"  # app.Model
+
+
+
+# INSTALLED_APPS = [
+#     'django.contrib.admin',
+#     'django.contrib.auth',
+#     'django.contrib.contenttypes',
+#     'django.contrib.sessions',
+#     'django.contrib.messages',
+#     'django.contrib.staticfiles',
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,7 +105,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'goldhris.urls'
+ROOT_URLCONF = 'goldhris.urls' #should be blank
+
+
+
+
 
 TEMPLATES = [
     {
@@ -112,7 +154,7 @@ DATABASES = {
     }
 }
 
-
+DATABASE_ROUTERS = ("django_tenants.routers.TenantSyncRouter",)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

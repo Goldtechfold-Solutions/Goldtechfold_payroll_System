@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 import environ
 
@@ -56,12 +56,15 @@ TENANT_TYPES = {
     "public": {  # this is the name of the public schema from get_public_schema_name
         "APPS": ['django_tenants',
                  'client',
+                 'django.contrib.admin',
+                  'django.contrib.auth',
                  'django.contrib.contenttypes',
 
                  'django.contrib.sessions',
                  "django.contrib.humanize",
                  'django.contrib.messages',
                  'django.contrib.staticfiles',
+                 'company_shared',
                  
                  # shared apps here
                  ],
@@ -77,7 +80,9 @@ for schema in TENANT_TYPES:
                        ["APPS"] if app not in INSTALLED_APPS]
     
     
-    
+
+
+SHOW_PUBLIC_IF_NO_TENANT_FOUND = True
     
     
     
@@ -105,7 +110,7 @@ ROOT_URLCONF = 'goldhris.urls' #should be blank
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,6 +122,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'goldhris.wsgi.application'
 

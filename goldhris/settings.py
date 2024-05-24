@@ -55,54 +55,19 @@ TENANT_TYPES = {
     "public": {  # this is the name of the public schema from get_public_schema_name
         "APPS": ['django_tenants',
                  'client',
-                 #  'django.contrib.admin',
-                 #  'django.contrib.auth',
-                 #  'django.contrib.contenttypes',
-
                  'django.contrib.sessions',
                  "django.contrib.humanize",
                  'django.contrib.messages',
                  'django.contrib.staticfiles',
                  'company_shared',
-                 #  'gold_auth',
                  # shared apps here
                  ],
         "URLCONF": "goldhris.urls_public",  # url for the public type here
 
-    },
-    "company": {
-        "APPS": ['django.contrib.contenttypes',
-                 'django.contrib.auth',
-                 'django.contrib.admin',
-                 'django.contrib.sessions',
-                 'django.contrib.messages',
-                 'gold_auth',
-                 'employee_tenant',
-                 'core',
-                 'debug_toolbar',
-                 ],
-        "URLCONF":  'goldhris.urls'
-
-        # "URLCONF": "tenant_multi_types_tutorial.urls_type1",
-    },
+    }
 
 
-    "goldadmin": {
-        "APPS": [
-            "django.contrib.admin",
-            "django.contrib.auth",
-            "django.contrib.contenttypes",
-            "django.contrib.sessions",
-            "django.contrib.messages",
-            "django.contrib.staticfiles",
-            "gold_auth",
-            "knox",
-            "goldadmin",
-            "debug_toolbar",
-
-        ],
-        "URLCONF": "goldhris.urls_goldadmin",
-    },
+ 
 }
 
 
@@ -140,7 +105,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'goldhris.urls'
+ROOT_URLCONF = 'goldhris.urls' #should be blank
 
 
 
